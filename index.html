@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QC7つ道具 クイックリファレンス</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #0a1628;
+            --accent-color: #c8a84e;
+            --text-color: #ffffff;
+            --light-bg: #1a2847;
+            --border-color: #3a5a7f;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* ===== ナビバー ===== */
+        .navbar {
+            background-color: #060d1a;
+            border-bottom: 1px solid #1a2a4a;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .nav-brand-en {
+            font-size: 0.6rem;
+            color: #808a9a;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .nav-brand-ja {
+            font-size: 0.95rem;
+            color: #c8a84e;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-links a {
+            color: #b0b8c8;
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 8px 14px;
+            border-radius: 6px;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+            background-color: rgba(200, 168, 78, 0.12);
+        }
+
+        .nav-links a.active {
+            color: #c8a84e;
+            background-color: rgba(200, 168, 78, 0.15);
+            font-weight: 600;
+        }
+
+        .nav-links a.nav-cta {
+            color: #0a1628;
+            background-color: #c8a84e;
+            font-weight: 600;
+            border-radius: 20px;
+            padding: 8px 18px;
+        }
+
+        .nav-links a.nav-cta:hover {
+            background-color: #e6c76e;
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #c8a84e;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1a2f5a 100%);
+            border-bottom: 3px solid var(--accent-color);
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #b8c5d6;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs-wrapper {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .nav-tabs-label {
+            font-size: 0.85rem;
+            color: #808a9a;
+            margin-bottom: 10px;
+        }
+
+        .nav-tabs {
+            display: inline-flex;
+            gap: 0;
+            background-color: rgba(26, 40, 71, 0.6);
+            border-radius: 30px;
+            padding: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .nav-tabs button {
+            background-color: transparent;
+            color: #b0b8c8;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 26px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .nav-tabs button:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-tabs button.active {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            box-shadow: 0 2px 8px rgba(200, 168, 78, 0.3);
+        }
+
+        /* Section */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Tool Cards */
+        .tools-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tool-card {
+            background-color: var(--light-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .tool-card:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px rgba(200, 168, 78, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .tool-card-header {
+            background: linear-gradient(135deg, var(--accent-color) 0%, #a68840 100%);
+            color: var(--primary-color);
+            padding: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .tool-card-header::after {
+            content: '▼';
+            margin-left: auto;
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .tool-card-header.open::after {
+            transform: rotate(180deg);
+        }
+
+        .tool-number {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .tool-card-content {
+            padding: 1.5rem;
+            display: none;
+        }
+
+        .tool-card-content.active {
+            display: block;
+        }
+
+        .tool-card-content h3 {
+            color: var(--accent-color);
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-card-content p {
+            margin-bottom: 1rem;
+            color: #d4dce6;
+            font-size: 0.95rem;
+        }
+
+        .tool-card-content ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tool-card-content li {
+            margin-bottom: 0.5rem;
+            color: #d4dce6;
+        }
+
+        .sample-canvas {
+            margin-top: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.02);
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .example-box {
+            background-color: rgba(200, 168, 78, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 4px;
+        }
+
+        .example-box strong {
+            color: var(--accent-color);
+        }
+
+        /* Guide Section */
+        .guide-section {
+            background-color: var(--light-bg);
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .guide-section h2 {
+            color: var(--accent-color);
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .guide-flow {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .guide-step {
+            background-color: var(--primary-color);
+            border: 2px solid var(--border-color);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .guide-step.active {
+            display: block;
+        }
+
+        .guide-step h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .guide-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .guide-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 0.75rem 1rem;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .guide-btn:hover {
+            background-color: #d4b35a;
+            transform: scale(1.05);
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, rgba(200, 168, 78, 0.2), rgba(200, 168, 78, 0.1));
+            border: 2px solid var(--accent-color);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .result-box h3 {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .result-box p {
+            font-size: 1.1rem;
+            color: #d4dce6;
+            margin-bottom: 1rem;
+        }
+
+        .result-tool-card {
+            background-color: var(--light-bg);
+            border: 2px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .result-tool-card:hover {
+            border-color: var(--accent-color);
+            background-color: rgba(200, 168, 78, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            border-top: 2px solid var(--accent-color);
+            text-align: center;
+            padding: 2rem;
+            color: #8a9ab0;
+            margin-top: 3rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .navbar {
+                padding: 0 16px;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background-color: #060d1a;
+                border-bottom: 1px solid #1a2a4a;
+                flex-direction: column;
+                padding: 12px 16px;
+                gap: 4px;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .tools-grid {
+                gap: 1rem;
+            }
+
+            .nav-tabs {
+                flex-direction: row;
+            }
+
+            .nav-tabs button {
+                padding: 10px 20px;
+                font-size: 0.88rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tool-card-content.active {
+            animation: slideIn 0.3s ease;
+        }
+
+        .guide-step.active {
+            animation: slideIn 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="https://sangyo-tech.jp/" class="nav-brand">
+            <div>
+                <div class="nav-brand-en">Industrial Technology Academy</div>
+                <div class="nav-brand-ja">産業技術アカデミー</div>
+            </div>
+        </a>
+        <button class="nav-toggle" onclick="toggleNav()" aria-label="メニュー">☰</button>
+        <div class="nav-links" id="navLinks">
+            <a href="https://sangyo-tech.jp/">TOP</a>
+            <a href="skill-assessment.html">スキル診断</a>
+            <a href="glossary.html">用語辞典</a>
+            <a href="qc7-tools-reference.html" class="active">QC7つ道具</a>
+            <a href="https://sangyo-tech-testt.ulizaportal.jp/" class="nav-cta">無料体験</a>
+            <a href="https://pricing.sangyo-tech.jp/">料金プラン</a>
+            <a href="https://about-us.sangyo-tech.jp/">私たちについて</a>
+        </div>
+    </nav>
+
+    <header>
+        <h1>📊 QC7つ道具 クイックリファレンス</h1>
+        <p>品質改善の基本ツールを一目で理解</p>
+    </header>
+
+    <div class="container">
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs-wrapper">
+            <p class="nav-tabs-label">表示を切り替え</p>
+            <div class="nav-tabs">
+                <button class="tab-btn active" data-tab="tools">7つの道具</button>
+                <button class="tab-btn" data-tab="guide">使い分けガイド</button>
+            </div>
+        </div>
+
+        <!-- Tools Section -->
+        <section id="tools" class="section active">
+            <div class="tools-grid">
+                <!-- Tool 1: Pareto Chart -->
+                <div class="tool-card">
+                    <div class="tool-card-header" onclick="toggleCard(this)">
+                        <span class="tool-number">①</span>
+                        <div>パレート図</div>
+                    </div>
+                    <div class="tool-card-content">
+                        <h3>概要</h3>
+                        <p>不良項目を多い順に棒グラフで表し、累積曲線を添えた図。全体の80%の不良原因は上位20%の項目から生じるという「パレートの法則」を視覚化します。</p>
+
+                        <h3>使い時</h3>
+                        <p>「何から改善すべきか」優先順位をつけたいとき</p>
+
+                        <h3>作り方</h3>
+                        <ul>
+                            <li>①データ収集</li>
+                            <li>②項目別に集計</li>
+                            <li>③大きい順にソート</li>
+                            <li>④棒グラフ作成</li>
+                            <li>⑤累積曲線追加</li>
+                        </ul>
+
+                        <h3>重要ポイント</h3>
+                        <p>上位2～3項目で全体の70-80%を占めることが多いため、その項目に集中すれば最大の効果が得られます。</p>
+
+                        <canvas id="canvas-pareto" class="sample-canvas"></canvas>
+
+                        <div class="example-box">
+                            <strong>現場例：</strong> 月間の不良モード別発生件数を整理した結果、「キズ」が全体の45%で最多。ここから対策を始めることで、全体の不良削減率が大きく改善。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tool 2: Cause and Effect Diagram -->
+                <div class="tool-card">
+                    <div class="tool-card-header" onclick="toggleCard(this)">
+                        <span class="tool-number">②</span>
+                        <div>特性要因図</div>
+                    </div>
+                    <div class="tool-card-content">
+                        <h3>概要</h3>
+                        <p>結果（特性）と要因の関係を魚の骨状に整理した図。問題の原因を網羅的に洗い出すために使用します。</p>
+
+                        <h3>使い時</h3>
+                        <p>「なぜこの問題が起きるのか」原因を網羅的に洗い出したいとき</p>
+
+                        <h3>作り方</h3>
+                        <ul>
+                            <li>①特性（結果）を右に書く</li>
+                            <li>②大骨（4M等）を引く</li>
+                            <li>③中骨・小骨を追加</li>
+                            <li>④ブレーンストーミング結果を記入</li>
+                        </ul>
+
+                        <h3>重要ポイント</h3>
+                        <p>4M（Man/Machine/Material/Method）に加えて、Measurement（測定）とEnvironment（環境）も含める6M視点が有効です。</p>
+
+                        <canvas id="canvas-fishbone" class="sample-canvas"></canvas>
+
+                        <div class="example-box">
+                            <strong>現場例：</strong> 「製品の寸法不良」という問題を4Mで原因分析。作業者の経験不足（Man）、装置の経年劣化（Machine）が主要因と判明し、教育と設備更新を実施。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tool 3: Histogram -->
+                <div class="tool-card">
+                    <div class="tool-card-header" onclick="toggleCard(this)">
+                        <span class="tool-number">③</span>
+                        <div>ヒストグラム</div>
+                    </div>
+                    <div class="tool-card-content">
+                        <h3>概要</h3>
+                        <p>データの分布状態を柱状グラフで表した図。データのばらつきと規格との関係を視覚的に理解できます。</p>
+
+                        <h3>使い時</h3>
+                        <p>「データのばらつきはどうか」分布の形状を確認したいとき</p>
+
+                        <h3>作り方</h3>
+                        <ul>
+                            <li>①データ収集</li>
+                            <li>②区間を決める</li>
+                            <li>③度数表作成</li>
+                            <li>④柱状グラフ作成</li>
+                            <li>⑤規格線を重ねる</li>
+                        </ul>
+
+                        <h3>重要ポイント</h3>
+                        <p>正規分布か、偏りがないか、規格の上限・下限を超えていないか、ピークは1つか複数かを確認。</p>
+
+                        <canvas id="canvas-histogram" class="sample-canvas"></canvas>
+
+                        <div class="example-box">
+                            <strong>現場例：</strong> 部品の重量データ100個の分布を確認したところ、2つのピークが見られた。機械を2つ使用していたことが判明し、機械ごとの精度調整で改善。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tool 4: Control Chart -->
+                <div class="tool-card">
+                    <div class="tool-card-header" onclick="toggleCard(this)">
+                        <span class="tool-number">④</span>
+                        <div>管理図</div>
+                    </div>
+                    <div class="tool-card-content">
+                        <h3>概要</h3>
+                        <p>工程の時系列データを管理限界線（UCL/LCL）と共にプロットした図。工程の安定性をリアルタイムで監視します。</p>
+
+                        <h3>使い時</h3>
+                        <p>「工程が安定しているか」時間経過での変動を監視したいとき</p>
+
+                        <h3>種類</h3>
+                        <ul>
+                            <li>X̄-R管理図：計量値の平均と範囲</li>
+                            <li>p管理図：不良率</li>
+                            <li>np管理図：不良数</li>
+                            <li>c管理図：不良数（定数個当たり）</li>
+                        </ul>
+
+                        <h3>重要ポイント</h3>
+                        <p>管理限界を超えた点、7点連続の傾向、周期的なパターンに注意。これらは工程異常の信号です。</p>
+
+                        <canvas id="canvas-control" class="sample-canvas"></canvas>
+
+                        <div class="example-box">
+                            <strong>現場例：</strong> 毎時間の寸法データを管理図で監視。午後3時頃にUCLを超える傾向が見られたため、原因を調査→高温環境が発見され、冷却装置の追加で改善。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tool 5: Scatter Diagram -->
+                <div class="tool-card">
+                    <div class="tool-card-header" onclick="toggleCard(this)">
+                        <span class="tool-number">⑤</span>
+                        <div>散布図</div>
+                    </div>
+                    <div class="tool-card-content">
+                        <h3>概要</h3>
+                        <p>2つの変数の関係を点でプロットした図。2つの要因の相関関係を視覚的に判断できます。</p>
+
+                        <h3>使い時</h3>
+                        <p>「2つの要因に関係があるか」相関を確認したいとき</p>
+
+                        <h3>作り方</h3>
+                        <ul>
+                            <li>①X軸・Y軸を決定</li>
+                            <li>②2つのデータペアを収集</li>
+                            <li>③点をプロット</li>
+                            <li>④相関の有無を判断</li>
+                        </ul>
+
+                        <h3>重要ポイント</h3>
+                        <p>正の相関/負の相関/無相関を判断。ただし相関があっても因果関係があるとは限らないことに注意。</p>
+
+                        <canvas id="canvas-scatter" class="sample-canvas"></canvas>
+
+                        <div class="example-box">
+                            <strong>現場例：</strong> 加工温度と製品硬度の関係を確認したところ強い正の相関が見られた。温度を最適値に設定することで、硬度のばらつきが大幅に削減。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tool 6: Check Sheet -->
+                <div class="tool-card">
+                    <div class="tool-card-header" onclick="toggleCard(this)">
+                        <span class="tool-number">⑥</span>
+                        <div>チェックシート</div>
+                    </div>
+                    <div class="tool-card-content">
+                        <h3>概要</h3>
+                        <p>データ収集を簡便にするための記録用紙。現場での手軽なデータ記録を実現し、他の6つの道具への入力データになります。</p>
+
+                        <h3>使い時</h3>
+                        <p>「データを手軽に集めたい」現場でのデータ記録時</p>
+
+                        <h3>種類</h3>
+                        <ul>
+                            <li>記録用チェックシート：データの記録</li>
+                            <li>点検用チェックシート：OK/NG判定</li>
+                            <li>不良の類別用：不良内容の分類</li>
+                        </ul>
+
+                        <h3>重要ポイント</h3>
+                        <p>記入が簡単で、誤記入が少なく、集計しやすい設計が重要。現場での運用を想定した作成が必須。</p>
+
+                        <div style="margin-top: 1.5rem;">
+                            <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                                <thead>
+                                    <tr style="background-color: rgba(200, 168, 78, 0.2);">
+                                        <th style="border: 1px solid var(--border-color); padding: 0.5rem;">時間帯</th>
+                                        <th style="border: 1px solid var(--border-color); padding: 0.5rem;">キズ</th>
+                                        <th style="border: 1px solid var(--border-color); padding: 0.5rem;">寸法</th>
+                                        <th style="border: 1px solid var(--border-color); padding: 0.5rem;">色むら</th>
+                                        <th style="border: 1px solid var(--border-color); padding: 0.5rem;">合計</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 0.5rem;">09:00</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 0.5rem; text-align: center;">||||</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 0.5rem; text-align: center;">||</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 0.5rem; text-align: center;">|</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 0.5rem; text-align: center;">7</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid var(--border-color); padding: 0.5rem;">10:00</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 0.5rem; text-align: center;">|||</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 0.5rem; text-align: center;">||||</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 0.5rem; text-align: center;">-</td>
+                                        <td style="border: 1px solid var(--border-color); padding: 0.5rem; text-align: center;">7</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="example-box">
+                            <strong>現場例：</strong> 1時間ごとの不良種類別チェックシートを導入。✓マークで簡単に記録でき、その集計データがパレート図作成の基礎になりました。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tool 7: Stratification -->
+                <div class="tool-card">
+                    <div class="tool-card-header" onclick="toggleCard(this)">
+                        <span class="tool-number">⑦</span>
+                        <div>層別</div>
+                    </div>
+                    <div class="tool-card-content">
+                        <h3>概要</h3>
+                        <p>データを要因別に分けて分析する手法。他の6つの道具と組み合わせることで、隠れたパターンや原因を発見できます。</p>
+
+                        <h3>使い時</h3>
+                        <p>「データを分けて見ると何かわかるか」隠れたパターン発見したいとき</p>
+
+                        <h3>層別の視点</h3>
+                        <ul>
+                            <li>機械別：異なる装置ごと</li>
+                            <li>作業者別：異なる担当者ごと</li>
+                            <li>時間帯別：朝/昼/夜シフト別</li>
+                            <li>原材料別：仕入れ先ごと</li>
+                            <li>製品型式別：品番ごと</li>
+                        </ul>
+
+                        <h3>重要ポイント</h3>
+                        <p>全体では見えない問題が、層別によって浮き彫りになることがあります。統計的には「隠れた層別」が存在しないか常に意識。</p>
+
+                        <canvas id="canvas-stratified" class="sample-canvas"></canvas>
+
+                        <div class="example-box">
+                            <strong>現場例：</strong> 部品の重量分布に2つのピークがあった問題。機械別に層別したところ、機械Aと機械Bで異なるピークを示していることが判明。機械ごとの精度調整で解決。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Guide Section -->
+        <section id="guide" class="section">
+            <div class="guide-section">
+                <h2>使い分けガイド</h2>
+                <p style="margin-bottom: 2rem; color: #b8c5d6;">質問に答えていくと、あなたに最適なQC道具が見つかります。</p>
+
+                <div class="guide-flow">
+                    <!-- Step 1 -->
+                    <div class="guide-step active">
+                        <h3>❓ ステップ1</h3>
+                        <p>データはもう集まっていますか？</p>
+                        <div class="guide-buttons">
+                            <button class="guide-btn" onclick="guideAnswer('no-data')">まだ集めていない</button>
+                            <button class="guide-btn" onclick="guideAnswer('has-data')">もう集まっている</button>
+                        </div>
+                    </div>
+
+                    <!-- No Data Route -->
+                    <div class="guide-step" id="step-no-data">
+                        <h3>📋 おすすめ: チェックシート</h3>
+                        <p>まずはデータを手軽に集めることが大切です。チェックシートで効率的にデータを記録しましょう。</p>
+                        <div class="guide-buttons">
+                            <button class="guide-btn" onclick="guideReset()">最初に戻る</button>
+                            <button class="guide-btn" onclick="guideShowTool(6)">詳細を見る</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="guide-step" id="step-has-data">
+                        <h3>❓ ステップ2</h3>
+                        <p>データから何を知りたいですか？</p>
+                        <div class="guide-buttons">
+                            <button class="guide-btn" onclick="guideAnswer('priority')">優先順位</button>
+                            <button class="guide-btn" onclick="guideAnswer('cause')">原因を洗い出す</button>
+                        </div>
+                        <div class="guide-buttons" style="margin-top: 1rem;">
+                            <button class="guide-btn" onclick="guideAnswer('distribution')">ばらつき・分布</button>
+                            <button class="guide-btn" onclick="guideAnswer('stability')">工程の安定性</button>
+                        </div>
+                        <div class="guide-buttons" style="margin-top: 1rem;">
+                            <button class="guide-btn" onclick="guideAnswer('correlation')">2つの関係性</button>
+                            <button class="guide-btn" onclick="guideAnswer('pattern')">隠れたパターン</button>
+                        </div>
+                    </div>
+
+                    <!-- Results -->
+                    <div class="guide-step" id="step-result-priority">
+                        <div class="result-box">
+                            <h3>① パレート図</h3>
+                            <p>不良項目を優先順位つけて整理し、最大の改善効果を狙う！</p>
+                            <button class="guide-btn" onclick="guideShowTool(1); guideReset();">詳細を見る</button>
+                        </div>
+                    </div>
+
+                    <div class="guide-step" id="step-result-cause">
+                        <div class="result-box">
+                            <h3>② 特性要因図</h3>
+                            <p>問題の原因を魚の骨状に整理して、包括的に原因を洗い出す！</p>
+                            <button class="guide-btn" onclick="guideShowTool(2); guideReset();">詳細を見る</button>
+                        </div>
+                    </div>
+
+                    <div class="guide-step" id="step-result-distribution">
+                        <div class="result-box">
+                            <h3>③ ヒストグラム</h3>
+                            <p>データの分布形状を把握し、ばらつきの原因と規格との関係を理解！</p>
+                            <button class="guide-btn" onclick="guideShowTool(3); guideReset();">詳細を見る</button>
+                        </div>
+                    </div>
+
+                    <div class="guide-step" id="step-result-stability">
+                        <div class="result-box">
+                            <h3>④ 管理図</h3>
+                            <p>工程の時系列変動を監視して、早期に異常を発見する！</p>
+                            <button class="guide-btn" onclick="guideShowTool(4); guideReset();">詳細を見る</button>
+                        </div>
+                    </div>
+
+                    <div class="guide-step" id="step-result-correlation">
+                        <div class="result-box">
+                            <h3>⑤ 散布図</h3>
+                            <p>2つの要因の相関関係を視覚化して、最適条件を発見！</p>
+                            <button class="guide-btn" onclick="guideShowTool(5); guideReset();">詳細を見る</button>
+                        </div>
+                    </div>
+
+                    <div class="guide-step" id="step-result-pattern">
+                        <div class="result-box">
+                            <h3>⑦ 層別</h3>
+                            <p>データを要因別に分けて、全体では見えない隠れたパターンを発見！</p>
+                            <button class="guide-btn" onclick="guideShowTool(7); guideReset();">詳細を見る</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2025 産業技術アカデミー</p>
+        <p style="font-size: 0.9rem; margin-top: 1rem;">品質改善の基本ツール - QC7つ道具を使いこなそう</p>
+        <p style="font-size: 0.75rem; margin-top: 0.5rem; color: #5a6a7a;">※ 本ページの内容は学習用に独自に作成した解説です。特定の規格や書籍の引用ではありません。</p>
+    </footer>
+
+    <script>
+        // ナビバー開閉
+        function toggleNav() {
+            document.getElementById('navLinks').classList.toggle('open');
+        }
+
+        // Tab Navigation
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tabName = this.getAttribute('data-tab');
+                switchTab(tabName);
+            });
+        });
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Tool Card Toggle
+        function toggleCard(header) {
+            const content = header.nextElementSibling;
+            content.classList.toggle('active');
+            header.classList.toggle('open');
+            if (content.classList.contains('active')) {
+                drawCanvases();
+            }
+        }
+
+        // Retina対応ヘルパー
+        function setupCanvas(canvas, desiredW, desiredH) {
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = desiredW * dpr;
+            canvas.height = desiredH * dpr;
+            canvas.style.width = desiredW + 'px';
+            canvas.style.height = desiredH + 'px';
+            const ctx = canvas.getContext('2d');
+            ctx.scale(dpr, dpr);
+            return ctx;
+        }
+
+        // Draw Canvas Charts
+        function drawCanvases() {
+            drawParetoChart();
+            drawFishboneChart();
+            drawHistogram();
+            drawControlChart();
+            drawScatterDiagram();
+            drawStratifiedHistogram();
+        }
+
+        function drawParetoChart() {
+            const canvas = document.getElementById('canvas-pareto');
+            if (!canvas || !canvas.getContext) return;
+
+            const width = 500; const height = 300;
+            const ctx = setupCanvas(canvas, width, height);
+            const padding = 40;
+
+            // Clear
+            ctx.fillStyle = 'rgba(10, 22, 40, 0.3)';
+            ctx.fillRect(0, 0, width, height);
+
+            // Data
+            const data = [
+                { label: 'キズ', value: 45 },
+                { label: '寸法', value: 28 },
+                { label: '色むら', value: 15 },
+                { label: '変形', value: 8 },
+                { label: 'その他', value: 4 }
+            ];
+
+            const total = data.reduce((sum, d) => sum + d.value, 0);
+            let cumulative = 0;
+
+            // Draw bars
+            ctx.fillStyle = '#c8a84e';
+            const barWidth = (width - padding * 2) / data.length;
+
+            data.forEach((d, i) => {
+                const barHeight = (d.value / total) * (height - padding * 2);
+                const x = padding + i * barWidth;
+                const y = height - padding - barHeight;
+
+                ctx.fillRect(x + 5, y, barWidth - 10, barHeight);
+
+                // Label
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '11px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(d.label, x + barWidth / 2, height - 20);
+                ctx.fillText(d.value, x + barWidth / 2, y - 5);
+            });
+
+            // Draw cumulative curve
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+
+            data.forEach((d, i) => {
+                cumulative += d.value;
+                const percentage = (cumulative / total) * 100;
+                const x = padding + i * barWidth + barWidth / 2;
+                const y = height - padding - (percentage / 100) * (height - padding * 2);
+
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+
+            // Axes
+            ctx.strokeStyle = '#3a5a7f';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, height - padding);
+            ctx.lineTo(width - padding / 2, height - padding);
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.stroke();
+        }
+
+        function drawFishboneChart() {
+            const canvas = document.getElementById('canvas-fishbone');
+            if (!canvas || !canvas.getContext) return;
+
+            const width = 500; const height = 300;
+            const ctx = setupCanvas(canvas, width, height);
+            const midY = height / 2;
+
+            // Clear
+            ctx.fillStyle = 'rgba(10, 22, 40, 0.3)';
+            ctx.fillRect(0, 0, width, height);
+
+            // Main spine (背骨)
+            ctx.strokeStyle = '#c8a84e';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(40, midY);
+            ctx.lineTo(width - 70, midY);
+            ctx.stroke();
+
+            // Head (矢印 + 結果ラベル)
+            ctx.fillStyle = '#c8a84e';
+            ctx.beginPath();
+            ctx.moveTo(width - 70, midY);
+            ctx.lineTo(width - 50, midY - 12);
+            ctx.lineTo(width - 50, midY + 12);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.fillStyle = '#c8a84e';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('寸法不良', width - 48, midY + 5);
+
+            // Bones (大骨) - 上2本、下2本
+            const bones = [
+                { label1: 'Man', label2: '(人)', spineX: 160, dir: -1 },
+                { label1: 'Method', label2: '(方法)', spineX: 310, dir: -1 },
+                { label1: 'Machine', label2: '(機械)', spineX: 160, dir: 1 },
+                { label1: 'Material', label2: '(材料)', spineX: 310, dir: 1 }
+            ];
+
+            bones.forEach(bone => {
+                const endY = midY + bone.dir * 100;
+                const labelY = midY + bone.dir * 115;
+
+                // 大骨ライン
+                ctx.strokeStyle = '#c8a84e';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(bone.spineX - 60, endY);
+                ctx.lineTo(bone.spineX, midY);
+                ctx.stroke();
+
+                // 小骨（2本）
+                ctx.strokeStyle = 'rgba(200,168,78,0.5)';
+                ctx.lineWidth = 1;
+                for (let j = 1; j <= 2; j++) {
+                    const sx = bone.spineX - 60 + j * 18;
+                    const sy = endY - bone.dir * j * 12;
+                    ctx.beginPath();
+                    ctx.moveTo(sx - 20, sy + bone.dir * -25);
+                    ctx.lineTo(sx, sy);
+                    ctx.stroke();
+                }
+
+                // ラベル
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(bone.label1, bone.spineX - 30, labelY);
+                ctx.font = '11px Arial';
+                ctx.fillText(bone.label2, bone.spineX - 30, labelY + 15);
+            });
+        }
+
+        function drawHistogram() {
+            const canvas = document.getElementById('canvas-histogram');
+            if (!canvas || !canvas.getContext) return;
+
+            const width = 500; const height = 300;
+            const ctx = setupCanvas(canvas, width, height);
+            const padding = 40;
+
+            // Clear
+            ctx.fillStyle = 'rgba(10, 22, 40, 0.3)';
+            ctx.fillRect(0, 0, width, height);
+
+            // Data (distribution)
+            const data = [2, 5, 12, 18, 20, 15, 10, 5, 2, 1];
+            const max = Math.max(...data);
+
+            // Draw bars
+            ctx.fillStyle = '#c8a84e';
+            const barWidth = (width - padding * 2) / data.length;
+
+            data.forEach((d, i) => {
+                const barHeight = (d / max) * (height - padding * 2);
+                const x = padding + i * barWidth;
+                const y = height - padding - barHeight;
+
+                ctx.fillRect(x + 2, y, barWidth - 4, barHeight);
+            });
+
+            // Spec lines
+            ctx.strokeStyle = '#ff6b6b';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+
+            // Lower spec
+            ctx.beginPath();
+            ctx.moveTo(padding + barWidth * 1.5, padding);
+            ctx.lineTo(padding + barWidth * 1.5, height - padding);
+            ctx.stroke();
+
+            // Upper spec
+            ctx.beginPath();
+            ctx.moveTo(width - padding - barWidth * 2, padding);
+            ctx.lineTo(width - padding - barWidth * 2, height - padding);
+            ctx.stroke();
+
+            ctx.setLineDash([]);
+
+            // Axes
+            ctx.strokeStyle = '#3a5a7f';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, height - padding);
+            ctx.lineTo(width - padding / 2, height - padding);
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.stroke();
+        }
+
+        function drawControlChart() {
+            const canvas = document.getElementById('canvas-control');
+            if (!canvas || !canvas.getContext) return;
+
+            const width = 500; const height = 300;
+            const ctx = setupCanvas(canvas, width, height);
+            const padding = 40;
+
+            // Clear
+            ctx.fillStyle = 'rgba(10, 22, 40, 0.3)';
+            ctx.fillRect(0, 0, width, height);
+
+            // Generate data
+            const data = [];
+            for (let i = 0; i < 20; i++) {
+                data.push(50 + Math.sin(i * 0.3) * 8 + Math.random() * 5);
+            }
+
+            const max = Math.max(...data) + 10;
+            const min = Math.min(...data) - 10;
+            const range = max - min;
+
+            // Draw control lines
+            ctx.strokeStyle = '#ff6b6b';
+            ctx.lineWidth = 2;
+
+            // UCL
+            const ucl = 65;
+            const yUCL = height - padding - ((ucl - min) / range) * (height - padding * 2);
+            ctx.beginPath();
+            ctx.moveTo(padding, yUCL);
+            ctx.lineTo(width - padding, yUCL);
+            ctx.stroke();
+
+            // Center line
+            ctx.strokeStyle = '#c8a84e';
+            ctx.lineWidth = 2;
+            const cl = 50;
+            const yCL = height - padding - ((cl - min) / range) * (height - padding * 2);
+            ctx.beginPath();
+            ctx.moveTo(padding, yCL);
+            ctx.lineTo(width - padding, yCL);
+            ctx.stroke();
+
+            // LCL
+            ctx.strokeStyle = '#ff6b6b';
+            const lcl = 35;
+            const yLCL = height - padding - ((lcl - min) / range) * (height - padding * 2);
+            ctx.beginPath();
+            ctx.moveTo(padding, yLCL);
+            ctx.lineTo(width - padding, yLCL);
+            ctx.stroke();
+
+            // Data points and line
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+
+            data.forEach((d, i) => {
+                const x = padding + (i / data.length) * (width - padding * 1.5);
+                const y = height - padding - ((d - min) / range) * (height - padding * 2);
+
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+
+            // Draw points
+            ctx.fillStyle = '#c8a84e';
+            data.forEach((d, i) => {
+                const x = padding + (i / data.length) * (width - padding * 1.5);
+                const y = height - padding - ((d - min) / range) * (height - padding * 2);
+                ctx.beginPath();
+                ctx.arc(x, y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // Axes
+            ctx.strokeStyle = '#3a5a7f';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, height - padding);
+            ctx.lineTo(width - padding / 2, height - padding);
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.stroke();
+        }
+
+        function drawScatterDiagram() {
+            const canvas = document.getElementById('canvas-scatter');
+            if (!canvas || !canvas.getContext) return;
+
+            const width = 500; const height = 300;
+            const ctx = setupCanvas(canvas, width, height);
+            const padding = 40;
+
+            // Clear
+            ctx.fillStyle = 'rgba(10, 22, 40, 0.3)';
+            ctx.fillRect(0, 0, width, height);
+
+            // Generate correlated data
+            const data = [];
+            for (let i = 0; i < 25; i++) {
+                const x = Math.random() * 100;
+                const y = x * 0.8 + Math.random() * 15;
+                data.push({ x, y });
+            }
+
+            const maxX = 100;
+            const maxY = 100;
+
+            // Draw points
+            ctx.fillStyle = '#c8a84e';
+            data.forEach(d => {
+                const x = padding + (d.x / maxX) * (width - padding * 1.5);
+                const y = height - padding - (d.y / maxY) * (height - padding * 2);
+                ctx.beginPath();
+                ctx.arc(x, y, 4, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // Trend line
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(padding, height - padding);
+            ctx.lineTo(width - padding, padding + 10);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Labels
+            ctx.fillStyle = '#b8c5d6';
+            ctx.font = '10px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('加工温度 →', width / 2, height - 10);
+
+            ctx.save();
+            ctx.translate(15, height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('製品硬度 →', 0, 0);
+            ctx.restore();
+
+            // Axes
+            ctx.strokeStyle = '#3a5a7f';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, height - padding);
+            ctx.lineTo(width - padding / 2, height - padding);
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.stroke();
+        }
+
+        function drawStratifiedHistogram() {
+            const canvas = document.getElementById('canvas-stratified');
+            if (!canvas || !canvas.getContext) return;
+
+            const width = 500; const height = 300;
+            const ctx = setupCanvas(canvas, width, height);
+            const padding = 40;
+
+            // Clear
+            ctx.fillStyle = 'rgba(10, 22, 40, 0.3)';
+            ctx.fillRect(0, 0, width, height);
+
+            // Data for two machines
+            const dataMachineA = [1, 3, 8, 14, 18, 12, 5, 2, 1, 0];
+            const dataMachineB = [0, 1, 2, 4, 5, 6, 8, 10, 12, 8];
+
+            const barWidth = (width - padding * 2) / dataMachineA.length;
+            const halfBar = barWidth / 2;
+            const maxValue = 20;
+
+            // Draw bars
+            dataMachineA.forEach((d, i) => {
+                const barHeight = (d / maxValue) * (height - padding * 2);
+                const x = padding + i * barWidth;
+                const y = height - padding - barHeight;
+
+                ctx.fillStyle = '#c8a84e';
+                ctx.fillRect(x + 2, y, halfBar - 4, barHeight);
+            });
+
+            dataMachineB.forEach((d, i) => {
+                const barHeight = (d / maxValue) * (height - padding * 2);
+                const x = padding + i * barWidth + halfBar;
+                const y = height - padding - barHeight;
+
+                ctx.fillStyle = '#6b9bc8';
+                ctx.fillRect(x + 2, y, halfBar - 4, barHeight);
+            });
+
+            // Legend
+            ctx.fillStyle = '#c8a84e';
+            ctx.fillRect(width - 140, padding, 10, 10);
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '10px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText('機械A', width - 125, padding + 9);
+
+            ctx.fillStyle = '#6b9bc8';
+            ctx.fillRect(width - 140, padding + 20, 10, 10);
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText('機械B', width - 125, padding + 29);
+
+            // Axes
+            ctx.strokeStyle = '#3a5a7f';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, height - padding);
+            ctx.lineTo(width - padding / 2, height - padding);
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.stroke();
+        }
+
+        // Guide Flow
+        function guideAnswer(answer) {
+            document.querySelectorAll('.guide-step').forEach(s => s.classList.remove('active'));
+
+            if (answer === 'no-data') {
+                document.getElementById('step-no-data').classList.add('active');
+            } else if (answer === 'has-data') {
+                document.getElementById('step-has-data').classList.add('active');
+            } else if (answer === 'priority') {
+                document.getElementById('step-result-priority').classList.add('active');
+            } else if (answer === 'cause') {
+                document.getElementById('step-result-cause').classList.add('active');
+            } else if (answer === 'distribution') {
+                document.getElementById('step-result-distribution').classList.add('active');
+            } else if (answer === 'stability') {
+                document.getElementById('step-result-stability').classList.add('active');
+            } else if (answer === 'correlation') {
+                document.getElementById('step-result-correlation').classList.add('active');
+            } else if (answer === 'pattern') {
+                document.getElementById('step-result-pattern').classList.add('active');
+            }
+        }
+
+        function guideReset() {
+            document.querySelectorAll('.guide-step').forEach(s => s.classList.remove('active'));
+            document.querySelector('.guide-step').classList.add('active');
+        }
+
+        function guideShowTool(toolNumber) {
+            document.querySelector('.tab-btn[data-tab="tools"]').click();
+            const cards = document.querySelectorAll('.tool-card');
+            if (cards[toolNumber - 1]) {
+                cards[toolNumber - 1].querySelector('.tool-card-header').click();
+                cards[toolNumber - 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        // Initialize canvas drawing on page load
+        window.addEventListener('load', function() {
+            drawCanvases();
+        });
+    </script>
+</body>
+</html>
